@@ -25,3 +25,6 @@ Date : 17 octobre 2026.
 Les captures de vérification restent dans le dossier d’essai ; elles ne font pas partie des visuels du site.
 
 La vérification du déploiement intervient après le push, avec une attente minimale de trois minutes. Son résultat définitif est consigné dans le compte rendu de la conversation et dans le dossier d’essai, sans prétendre à une publication vérifiée avant observation.
+
+## Correction de publication
+Le premier déploiement a échoué car Cloudflare Pages attend le répertoire dist. Le générateur produit désormais ce répertoire avec seulement les pages HTML, assets, redirections, en-têtes, robots et sitemap. Un second contrôle vérifie les liens dans cette sortie et l’absence des scripts et documents de développement.

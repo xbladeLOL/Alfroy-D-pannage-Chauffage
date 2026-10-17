@@ -1,8 +1,9 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, cp, copyFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const output = path.join(root, 'dist');
 const base = 'https://alfroy-d-pannage-chauffage.pages.dev';
 const phone = '<a href="tel:+33238554413">02 38 55 44 13</a>';
 const map = 'https://www.google.com/maps/search/?api=1&query=58+rue+du+Poirier+Rond+45000+Orleans';
@@ -34,6 +35,14 @@ for (const page of pages) {
   const doc=`<!doctype html><html lang="fr" id="haut"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${page.title}</title><meta name="description" content="${page.description}"><meta name="theme-color" content="#173e35">${is404?'<meta name="robots" content="noindex">':`<link rel="canonical" href="${base}${page.url}">`}<meta property="og:title" content="${page.title}"><meta property="og:description" content="${page.description}"><meta property="og:type" content="website"><meta property="og:url" content="${base}${page.url}"><meta property="og:locale" content="fr_FR"><link rel="stylesheet" href="/assets/style.css"><script src="/assets/app.js" defer></script></head><body data-page="${page.url}" data-version="alfroy-refonte-2026-10-v1">${header(page.url)}<main id="contenu">${page.body}</main>${footer}</body></html>`;
   await mkdir(path.dirname(path.join(root,file)),{recursive:true});
   await writeFile(path.join(root,file),doc);
+  await mkdir(path.dirname(path.join(output,file)),{recursive:true});
+  await writeFile(path.join(output,file),doc);
 }
 await writeFile(path.join(root,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages.filter(p=>p.url!=='/404/').map(p=>`<url><loc>${base}${p.url}</loc></url>`).join('')}</urlset>`);
 console.log(`${pages.length} pages générées dans ${root}`);
+
+await cp(path.join(root,'assets'),path.join(output,'assets'),{recursive:true});
+for (const name of ['_headers','_redirects','robots.txt','sitemap.xml']) {
+  await copyFile(path.join(root,name),path.join(output,name));
+}
+console.log('Sortie de publication prête : dist/ (pages et ressources publiques uniquement).');

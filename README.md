@@ -5,10 +5,10 @@ Refonte statique du site Alfroy. HTML, CSS et JavaScript natifs ; aucune dépend
 ## Utilisation
 
 - `npm run build` : génère les pages HTML à partir de `scripts/build.mjs`.
-- `npm run check` : vérifie les pages, liens internes, ancres, téléphone, métadonnées et l’absence de visuels générés.
+- `npm run check` et `node scripts/check.mjs --dist` : vérifie les pages, liens internes, ancres, téléphone, métadonnées et l’absence de visuels générés.
 - `npm start` : aperçu local à l’adresse `http://127.0.0.1:4173`.
 
-Les fichiers HTML générés sont suivis dans Git. Le site peut donc être publié sans compilation. Pour Cloudflare Pages : préréglage **None**, commande de compilation `npm run build` (ou vide), répertoire de sortie `.` et branche de production `main`. Les fichiers `_redirects` et `_headers` fournissent les redirections historiques et les en-têtes.
+Les fichiers HTML générés sont suivis dans Git. La compilation produit également `dist/`, contenant seulement les pages et ressources publiques. Le site peut donc être publié sans compilation. Pour Cloudflare Pages : préréglage **None**, commande de compilation `npm run build`, répertoire de sortie `dist` et branche de production `main`. Les fichiers `_redirects` et `_headers` fournissent les redirections historiques et les en-têtes.
 
 ## Modifier le site
 

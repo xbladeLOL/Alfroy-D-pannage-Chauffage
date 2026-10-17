@@ -1,0 +1,12 @@
+{
+  "name": "alfroy-depannage-chauffage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site statique Alfroy Dépannage Chauffage, sans dépendances externes.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}
